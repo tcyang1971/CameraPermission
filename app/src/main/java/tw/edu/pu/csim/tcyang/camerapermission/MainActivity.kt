@@ -1,7 +1,10 @@
 package tw.edu.pu.csim.tcyang.camerapermission
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import android.widget.Toast.*
@@ -32,6 +35,10 @@ class MainActivity : AppCompatActivity(), PermissionListener {
     override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
         if (p0!!.isPermanentlyDenied) {
             Toast.makeText(this, "您永久拒絕拍照權限", Toast.LENGTH_SHORT).show()
+            var it: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            var uri: Uri = Uri.fromParts("package", getPackageName(), null)
+            it.setData(uri)
+            startActivity(it)
         }
         else{
             Toast.makeText(this, "您此次拒絕拍照權限", Toast.LENGTH_SHORT).show()
